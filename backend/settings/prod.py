@@ -9,6 +9,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'eleana-abra-test-message-app.herokuapp.com' ]
 
+STATIC_HOST = "https://d4663kmspf1sqa.cloudfront.net" 
 
 DATABASES = {
     'default': {
