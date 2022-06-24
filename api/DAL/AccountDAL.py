@@ -29,6 +29,7 @@ class AccountDAL():
             if application['password'] !=application['password2']:
                 return Response(data='Passwords must match',status=status.HTTP_400_BAD_REQUEST)
         except: return Response(data='Password and password2 required',status=status.HTTP_400_BAD_REQUEST)
+        
         serializer = AccountSerializer(data=application)
         if serializer.is_valid():
             user = serializer.save()
@@ -43,18 +44,15 @@ class AccountDAL():
         Takes login details and request. Logs user in if password and email match a user.
         Returns a 400 status otherwise (if they don't match or if either was not entered).
         """
-        print('HELLO I AM IN LOGGIN')
         if request.user.is_authenticated:
             return Response(f'Please logout first {request.user.username}!.', status=status.HTTP_400_BAD_REQUEST)
-        print(request.data)
+
         try:
-            print(request.data)
             email = request.data["email"]
-            print(email)
             password = request.data["password"]
-            print(password)
         except:
             return Response('Missing either email or password!.', status=status.HTTP_400_BAD_REQUEST)
+
         user = authenticate(username=email, password=password)
         if user is not None:
             login(request, user)
@@ -113,6 +111,7 @@ class AccountDAL():
         """Takes id and account. 
         if message does not exist, returns status 404.
         if message is not to/by the account, returns status 400.
+        turns read status to true if the logged in user is the to_user.
         if good, returns message, sends status 200.
         """
         message = AccountDAL.__check_if_exist_check_if_of_account(id, account)
