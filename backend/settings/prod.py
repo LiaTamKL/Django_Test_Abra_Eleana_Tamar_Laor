@@ -7,7 +7,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'eleana-abra-test-message-app.com' ]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'eleana-abra-test-message-app.herokuapp.com' ]
 
 
 DATABASES = {
