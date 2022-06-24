@@ -1,0 +1,2 @@
+In order to turn production mode on, you must switch in wsgi.py, asgi.py and manage.py the variable DJANGO_SETTINGS_MODULE to backend.settings.prod
+If you do so, the app will not run on your local version however.

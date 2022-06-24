@@ -13,8 +13,9 @@ def api_overview(request):
         'Register (POST)':'/register/',
         'Logout (GET)':'/logout/',
         'Login (POST)':'/login/',
-        'All Messages (GET), Write message (POST)':'/messages/',
+        'All Messages sent to user (GET), Write message (POST)':'/messages/',
         'Get Specific Message (GET), Delete message (DELETE)':'/messages/<int:pk>',
+        'All Messages by user (GET)':'/sent/',
         'Get Unread (GET)':'/unread/',
     }
     return Response(api_urls)
@@ -56,6 +57,16 @@ def general_message_actions(request):
         """Needs by_user=[username] and content=[text]."""
         result = AccountDAL.write_message(details=request.data, sender=request.user.username)
         return result
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_sent_messages(request):
+
+    if request.method == 'GET':
+        result = AccountDAL.get_sent_messages(request.user)
+        return result
+
+
 
 @api_view(['DELETE', 'GET'])
 @permission_classes([IsAuthenticated])

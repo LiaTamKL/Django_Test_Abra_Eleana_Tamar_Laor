@@ -15,8 +15,7 @@ class AccountDAL():
             message = Message.objects.get(pk=id)
         except:
             return 404
-        
-        if message.to_user != account:
+        if message.to_user != account and message.by_user != account:
             return 400
         
         return message
@@ -44,11 +43,16 @@ class AccountDAL():
         Takes login details and request. Logs user in if password and email match a user.
         Returns a 400 status otherwise (if they don't match or if either was not entered).
         """
+        print('HELLO I AM IN LOGGIN')
         if request.user.is_authenticated:
             return Response(f'Please logout first {request.user.username}!.', status=status.HTTP_400_BAD_REQUEST)
+        print(request.data)
         try:
+            print(request.data)
             email = request.data["email"]
+            print(email)
             password = request.data["password"]
+            print(password)
         except:
             return Response('Missing either email or password!.', status=status.HTTP_400_BAD_REQUEST)
         user = authenticate(username=email, password=password)
@@ -71,40 +75,6 @@ class AccountDAL():
         messages = Message.objects.filter(to_user=account)
         serializer = MessageSerializer(messages, many=True)
         return Response(serializer.data)
-    
-    def get_specific_message(id, account):
-        """Takes id and account. 
-        if message does not exist, returns status 404.
-        if message is not to the account, returns status 400.
-        if good, returns message, sends status 200.
-        """
-        message = AccountDAL.__check_if_exist_check_if_of_account(id, account)
-        if message == 404:
-            return Response(data='Message does not exist.', status=status.HTTP_404_NOT_FOUND)
-        if message == 400:
-            return Response(data='Message does not belong to logged in user.', status=status.HTTP_400_BAD_REQUEST)
-        
-        message.read = True
-        message.save()
-        serializer = MessageSerializer(message, many=False)
-        return Response(data=serializer.data)
-
-
-
-    def delete_message(id, account):
-        """Takes id and account. 
-        if message does not exist, returns status 404.
-        if message is not to the account, returns status 400.
-        if good, deletes message, sends status 200.
-        """
-        message = AccountDAL.__check_if_exist_check_if_of_account(id, account)
-        if message == 404:
-            return Response(data='Message does not exist.', status=status.HTTP_404_NOT_FOUND)
-        if message == 400:
-            return Response(data='Message does not belong to logged in user.', status=status.HTTP_400_BAD_REQUEST)
-        
-        message.delete()
-        return Response(data=f'Message #{id}, to {account} successfully deleted')
 
 
     def get_unread_messages(account):
@@ -115,6 +85,48 @@ class AccountDAL():
         serializer = MessageSerializer(messages, many=True)
         return Response(serializer.data)
 
+    def get_sent_messages(account):
+        """takes account. 
+        returns all messaged sent by said account.
+        """
+        messages = Message.objects.filter(by_user=account)
+        serializer = MessageSerializer(messages, many=True)
+        return Response(serializer.data)
+
+
+    def delete_message(id, account):
+        """Takes id and account. 
+        if message does not exist, returns status 404.
+        if message is not to/by the account, returns status 400.
+        if good, deletes message, sends status 200.
+        """
+        message = AccountDAL.__check_if_exist_check_if_of_account(id, account)
+        if message == 404:
+            return Response(data='Message does not exist.', status=status.HTTP_404_NOT_FOUND)
+        if message == 400:
+            return Response(data='Message does not belong to logged in user.', status=status.HTTP_400_BAD_REQUEST)
+        
+        message.delete()
+        return Response(data=f'Message #{id}, successfully deleted by {account}')
+    
+    def get_specific_message(id, account):
+        """Takes id and account. 
+        if message does not exist, returns status 404.
+        if message is not to/by the account, returns status 400.
+        if good, returns message, sends status 200.
+        """
+        message = AccountDAL.__check_if_exist_check_if_of_account(id, account)
+        if message == 404:
+            return Response(data='Message does not exist.', status=status.HTTP_404_NOT_FOUND)
+        if message == 400:
+            return Response(data='Message does not belong to logged in user.', status=status.HTTP_400_BAD_REQUEST)
+        
+        if message.to_user == account:
+            message.read = True
+            message.save()
+        serializer = MessageSerializer(message, many=False)
+        return Response(data=serializer.data)
+
     def write_message(details, sender):
         """takes request data and sender's username. 
         If sender=receiver, sends status 400. If receiver doesn't exist, sends status 404.
@@ -123,18 +135,23 @@ class AccountDAL():
         """
         details['by_user'] = sender
         by = Account.objects.get(username=sender)
+
+
         if details['to_user'] == sender:
             return Response(data='You cannot send a message to yourself!', status=status.HTTP_400_BAD_REQUEST)
+
         try:
             to = Account.objects.get(username=details['to_user'])
         except Account.DoesNotExist:
             return Response(data='Receiver does not exist!', status=status.HTTP_404_NOT_FOUND)
+        
         serializer = MessageSerializer(data=details, many=False)
         if serializer.is_valid():
             new_message = Message()
             new_message.by_user = by
             new_message.to_user = to
             new_message.content = details['content']
+            new_message.subject = details['subject']
             new_message.save()
             return Response('Message created')
         else:

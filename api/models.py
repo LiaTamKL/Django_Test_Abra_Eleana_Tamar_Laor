@@ -55,7 +55,8 @@ class Account(AbstractBaseUser):
 
 class Message(Model):
     link = "Edit"
-    content = TextField(max_length=100, null=False)
+    subject = CharField(max_length=30, null=False)
+    content = TextField(max_length=100, null=True)
     by_user = ForeignKey(Account, null=False, related_name="by", on_delete=PROTECT)
     to_user = ForeignKey(Account, null=False, related_name="to", on_delete=CASCADE)
     creation_data = DateTimeField(verbose_name='date created', auto_now_add=True)
