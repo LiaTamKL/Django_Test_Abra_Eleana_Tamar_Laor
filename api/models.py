@@ -66,3 +66,6 @@ class Message(Model):
         ordering = ['creation_data']
     def __str__(self) -> str:
         return (f'By: {self.by_user}, sent to: {self.to_user}. Message id: {self.pk}')
+
+class Unread(Model):
+    message = ForeignKey(Message, null=False, related_name="message", on_delete=CASCADE)

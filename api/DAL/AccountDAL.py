@@ -79,7 +79,12 @@ class AccountDAL():
         """takes account. 
         returns all unread messages for said account.
         """
-        messages = Message.objects.filter(to_user=account).filter(read=False)
+        unread_list =[]
+        unread = Unread.objects.all()
+        for mes in unread:
+            unread_list.append(mes.message.id)
+        print(unread_list)
+        messages = Message.objects.filter(to_user=account).filter(id__in=unread_list)
         serializer = MessageSerializer(messages, many=True)
         return Response(serializer.data)
 
@@ -105,6 +110,11 @@ class AccountDAL():
             return Response(data='Message does not belong to logged in user.', status=status.HTTP_400_BAD_REQUEST)
         
         message.delete()
+        try: 
+            unread_status = Unread.objects.get(message=message)
+            unread_status.delete()
+        except:
+            pass
         return Response(data=f'Message #{id}, successfully deleted by {account}')
     
     def get_specific_message(id, account):
@@ -123,6 +133,8 @@ class AccountDAL():
         if message.to_user == account:
             message.read = True
             message.save()
+            unread_status = Unread.objects.get(message=message)
+            unread_status.delete()
         serializer = MessageSerializer(message, many=False)
         return Response(data=serializer.data)
 
@@ -152,6 +164,9 @@ class AccountDAL():
             new_message.content = details['content']
             new_message.subject = details['subject']
             new_message.save()
+            unread_status = Unread()
+            unread_status.message = new_message
+            unread_status.save()
             return Response('Message created')
         else:
            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -21,3 +21,7 @@ admin.site.register(Account, AccountAdmin)
 class MessageAdmin(admin.ModelAdmin):
     list_display = ['by_user', 'to_user','creation_data', 'read', 'link']
     list_display_links = ('link',)
+
+@admin.register(Unread)
+class UnreadAdmin(admin.ModelAdmin):
+    list_display = ['message',]
