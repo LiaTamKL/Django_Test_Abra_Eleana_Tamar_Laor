@@ -133,8 +133,11 @@ class AccountDAL():
         if message.to_user == account:
             message.read = True
             message.save()
-            unread_status = Unread.objects.get(message=message)
-            unread_status.delete()
+            try:
+                unread_status = Unread.objects.get(message=message)
+                unread_status.delete()
+            except:
+                pass
         serializer = MessageSerializer(message, many=False)
         return Response(data=serializer.data)
 
