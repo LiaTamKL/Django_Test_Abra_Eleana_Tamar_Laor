@@ -13,7 +13,7 @@ def api_overview(request):
         'Register (POST)':'/register/',
         'Logout (GET)':'/logout/',
         'Login (POST)':'/login/',
-        'All Messages sent to user (GET), Write message (POST)':'/messages/',
+        'All user Messages (GET), Write message (POST)':'/messages/',
         'Get Specific Message (GET), Delete message (DELETE)':'/messages/<int:pk>',
         'All Messages by user (GET)':'/sent/',
         'Get Unread (GET)':'/unread/',

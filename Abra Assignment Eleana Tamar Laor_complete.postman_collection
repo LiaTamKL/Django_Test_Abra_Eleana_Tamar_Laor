@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d412be3e-059b-4bbe-9507-b02e19161935",
+		"_postman_id": "cb6722e0-eac6-492b-a175-46cc3c5d4083",
 		"name": "Abra Assignment Eleana Tamar Laor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,17 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "https://eleana-abra-test-message-app.herokuapp.com/api/",
+					"protocol": "https",
+					"host": [
+						"eleana-abra-test-message-app",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						""
+					]
 				}
 			},
 			"response": []
