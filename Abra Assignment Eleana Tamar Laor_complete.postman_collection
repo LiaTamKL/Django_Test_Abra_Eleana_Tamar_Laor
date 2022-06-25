@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "315e4189-ea3e-4034-8ff2-6e961f10a663",
+		"_postman_id": "d412be3e-059b-4bbe-9507-b02e19161935",
 		"name": "Abra Assignment Eleana Tamar Laor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,7 +9,10 @@
 			"name": "overview of api",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": ""
+				}
 			},
 			"response": []
 		},
@@ -343,7 +346,21 @@
 			"name": "get message 2 (as bobby tables or lia)",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "https://eleana-abra-test-message-app.herokuapp.com/api/messages/2",
+					"protocol": "https",
+					"host": [
+						"eleana-abra-test-message-app",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"messages",
+						"2"
+					]
+				}
 			},
 			"response": []
 		},
