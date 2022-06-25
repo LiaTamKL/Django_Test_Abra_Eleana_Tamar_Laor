@@ -68,11 +68,16 @@ class AccountDAL():
 
     def get_all_account_messages(account):
         """Takes account. 
-        Returns all unread messages for said account.
+        Returns all messages for said account.
         """
+        context = {}
         messages = Message.objects.filter(to_user=account)
+        sent_messages = Message.objects.filter(by_user=account)
         serializer = MessageSerializer(messages, many=True)
-        return Response(serializer.data)
+        second_serializer = MessageSerializer(sent_messages, many=True)
+        context['received'] = serializer.data
+        context['sent'] = second_serializer.data
+        return Response(data=context)
 
 
     def get_unread_messages(account):
