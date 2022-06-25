@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "315e4189-ea3e-4034-8ff2-6e961f10a663",
+		"name": "Abra Assignment Eleana Tamar Laor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "overview of api",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "login as Bobby Tables",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const cookieJar = pm.cookies.jar();\r",
+							"csrftoken = pm.environment.set('csrftoken', pm.cookies.get('csrftoken'))\r",
+							"\r",
+							"var token =cookieJar.get('https://eleana-abra-test-message-app.herokuapp.com/', 'csrftoken', (cookie, errors)=>{console.log('what is a token?', cookie, errors);\r",
+							"pm.globals.set('csrftoken', errors)})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "noDB@gmail.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "sanitize your input query",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://eleana-abra-test-message-app.herokuapp.com/api/login/",
+					"protocol": "https",
+					"host": [
+						"eleana-abra-test-message-app",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register new user",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "SecondTest@gmail.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "testpassword",
+							"type": "default"
+						},
+						{
+							"key": "password2",
+							"value": "testpassword",
+							"type": "default"
+						},
+						{
+							"key": "username",
+							"value": "testing",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://eleana-abra-test-message-app.herokuapp.com/api/register/",
+					"protocol": "https",
+					"host": [
+						"eleana-abra-test-message-app",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://eleana-abra-test-message-app.herokuapp.com/api/logout/",
+					"protocol": "https",
+					"host": [
+						"eleana-abra-test-message-app",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"logout",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "read all messages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://eleana-abra-test-message-app.herokuapp.com/api/messages/",
+					"protocol": "https",
+					"host": [
+						"eleana-abra-test-message-app",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"messages",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login as lia (admin)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const cookieJar = pm.cookies.jar();\r",
+							"csrftoken = pm.environment.set('csrftoken', pm.cookies.get('csrftoken'))\r",
+							"\r",
+							"var token =cookieJar.get('https://eleana-abra-test-message-app.herokuapp.com/', 'csrftoken', (cookie, errors)=>{console.log('what is a token?', cookie, errors);\r",
+							"pm.globals.set('csrftoken', errors)})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "ellaor6@gmail.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "1",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://eleana-abra-test-message-app.herokuapp.com/api/login/",
+					"protocol": "https",
+					"host": [
+						"eleana-abra-test-message-app",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "write message",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CSRFToken",
+						"value": "{{csrftoken}}",
+						"type": "default"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Referer",
+						"value": "https://eleana-abra-test-message-app.herokuapp.com/api/messages/",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"to_user\": \"Bobby Tables\",\r\n\"subject\": \"Student registration\",\r\n\"content\": \"My name is Robert');DROP TABLE Students;--\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://eleana-abra-test-message-app.herokuapp.com/api/messages/",
+					"protocol": "https",
+					"host": [
+						"eleana-abra-test-message-app",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"messages",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "read unread messages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://eleana-abra-test-message-app.herokuapp.com/api/unread/",
+					"protocol": "https",
+					"host": [
+						"eleana-abra-test-message-app",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"unread",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "read sent messages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://eleana-abra-test-message-app.herokuapp.com/api/sent/",
+					"protocol": "https",
+					"host": [
+						"eleana-abra-test-message-app",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"sent",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get message 2 (as bobby tables or lia)",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "delete #11",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-CSRFToken",
+						"value": "{{csrftoken}}",
+						"type": "default"
+					},
+					{
+						"key": "Referer",
+						"value": "https://eleana-abra-test-message-app.herokuapp.com/api/messages/7",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "https://eleana-abra-test-message-app.herokuapp.com/api/messages/11",
+					"protocol": "https",
+					"host": [
+						"eleana-abra-test-message-app",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"messages",
+						"11"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
